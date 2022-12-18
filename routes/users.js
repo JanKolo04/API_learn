@@ -8,6 +8,12 @@ const { send } = require('process');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
+    // First Validate The Request
+    const { error } = validate(req.body);
+    if (error) {
+        return res.status(400).send(error.details[0].message);
+    }
+
     //find all users
     const users = await User.find({});
 
@@ -23,6 +29,19 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+    // First Validate The Request
+    const { error } = validate(req.body);
+    if (error) {
+        return res.status(400).send(error.details[0].message);
+    }
+
+    //if token doesnt exist return error
+    /*
+    if(!req.get("token")) {
+        return res.send("You are not after auth!");
+    }
+    */
+
     //get parameters from url
     const params = req.params;
     //find all users
