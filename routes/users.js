@@ -5,23 +5,18 @@ const _ = require('lodash');
 const { User } = require("../models/register");
 const express = require('express');
 const cookieParser = require("cookie-parser");
-const { send } = require('process');
+const { send, nextTick } = require('process');
 const { appendFile } = require("fs");
+
 const router = express.Router();
-const app = express();
 
-app.use(cookieParser());
+router.use(cookieParser());
 
-router.post('/', async (req, res) => {
-    // // First Validate The Request
-    // const { error } = validate(req.body);
-    // if (error) {
-    //     return res.status(400).send(error.details[0].message);
-    // }
-    if(res.cookies === "undefined") {
-        console.log("ok");
+router.post('/', async (req, res, next) => {
+    //check exixsting of token cookie
+    if(!req.cookies['token']) {
+        return res.send("You are not autorizated!");
     }
-    console.log(req.cookies);
  
     //find all users
     const users = await User.find({});
@@ -38,18 +33,10 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    // // First Validate The Request
-    // const { error } = validate(req.body);
-    // if (error) {
-    //     return res.status(400).send(error.details[0].message);
-    // }
-
-    //if token doesnt exist return error
-    /*
-    if(!req.get("token")) {
-        return res.send("You are not after auth!");
+    //check exixsting of token cookie
+    if(!req.cookies['token']) {
+        return res.send("You are not autorizated!");
     }
-    */
 
     //get parameters from url
     const params = req.params;
