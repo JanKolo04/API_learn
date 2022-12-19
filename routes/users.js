@@ -4,16 +4,25 @@ const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User } = require("../models/register");
 const express = require('express');
+const cookieParser = require("cookie-parser");
 const { send } = require('process');
+const { appendFile } = require("fs");
 const router = express.Router();
+const app = express();
+
+app.use(cookieParser());
 
 router.post('/', async (req, res) => {
-    // First Validate The Request
-    const { error } = validate(req.body);
-    if (error) {
-        return res.status(400).send(error.details[0].message);
+    // // First Validate The Request
+    // const { error } = validate(req.body);
+    // if (error) {
+    //     return res.status(400).send(error.details[0].message);
+    // }
+    if(res.cookies === "undefined") {
+        console.log("ok");
     }
-
+    console.log(req.cookies);
+ 
     //find all users
     const users = await User.find({});
 
@@ -29,11 +38,11 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    // First Validate The Request
-    const { error } = validate(req.body);
-    if (error) {
-        return res.status(400).send(error.details[0].message);
-    }
+    // // First Validate The Request
+    // const { error } = validate(req.body);
+    // if (error) {
+    //     return res.status(400).send(error.details[0].message);
+    // }
 
     //if token doesnt exist return error
     /*

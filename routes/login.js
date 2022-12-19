@@ -6,7 +6,11 @@ const { validate } = require('../models/login');
 const { User } = require("../models/register");
 const express = require('express');
 const { send } = require('process');
+const cookieParser = require("cookie-parser");
 const router = express.Router();
+const app = express();
+
+app.use(cookieParser());
 
 router.post('/', async (req, res) => {
     // First Validate The Request
@@ -23,8 +27,9 @@ router.post('/', async (req, res) => {
         if(validPassword) {
             //create token
             const token = jwt.sign({_id: user._id}, config.get("PrivateKey"));
-            //save token in header and send data
-            return res.header("token", token).send(_.pick(user, ['_id', 'email']));
+            //save token in cookie
+            res.cookie("token", token);
+            return res.send("You are in!");
         }
         else {
             return res.send("Wrong password!");
