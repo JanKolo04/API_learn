@@ -4,18 +4,17 @@ const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User } = require("../models/register");
 const express = require('express');
-const session = require("express-session");
+const session = require("../session/index");
 const { send, nextTick } = require('process');
 const { appendFile } = require("fs");
-
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    //check exixsting of token cookie
-    if(!req.cookies['token'] || req.cookies['token'] == "") {
+    //check exixsting of token session
+    if(!session.token) {
         return res.send("You are not autorizated!");
     }
-    else if(!req.cookies['group'] || req.cookies['group'] != "admin") {
+    else if(!session.group || session.group != "admin") {
         return res.send("You are not in admin group!");
     }
  

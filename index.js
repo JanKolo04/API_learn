@@ -3,6 +3,7 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
 const express = require('express');
+const session = require("express-session");
 const app = express();
 
 //all pages
@@ -18,6 +19,7 @@ if(!config.get("PrivateKey")) {
 mongoose.connect('mongodb://localhost/testy')
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
+
 
 app.use(express.json());
 app.use('/api/register', register);
