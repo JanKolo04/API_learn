@@ -38,17 +38,6 @@ Run main file
 
 </br>
 
-#### Register
-
-```
-  POST /api/register
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `null`    | `string` | **Required**. Register to can login |
-
-</br>
 
 #### Fetch all users
 
@@ -60,24 +49,13 @@ Run main file
 | :-------- | :------- | :-------------------------------- |
 | `null`    | `string` | **Required**. If you are authorizated and in `admin` group you have acces inyo this page |
 
-</br>
-
-#### Fetch user with :id
-
-```
-  GET /api/register/:id
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`    | `int` | **Required**. Id of user |
-
 
 
 ## Documentation
 In first step we have to install library which I have given above.
 Second step in our API is login page when you have account, but if no you have to go to register page where you can create your account.
 When you are in admin group you have access into `user` nad `user/:id` pages (Currently group can change in MongoDB Compass, but I work on this).
+
 
 ## Code
 
