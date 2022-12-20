@@ -20,6 +20,11 @@ const User = mongoose.model('users', new mongoose.Schema({
         required: true,
         minlength: 1,
         maxlength: 1024
+    },
+    group: {
+        type: String,
+        required: true,
+        default: "user"
     }
 }));
 

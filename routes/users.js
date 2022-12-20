@@ -4,18 +4,19 @@ const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User } = require("../models/register");
 const express = require('express');
-const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const { send, nextTick } = require('process');
 const { appendFile } = require("fs");
 
 const router = express.Router();
 
-router.use(cookieParser());
-
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
     //check exixsting of token cookie
-    if(!req.cookies['token']) {
+    if(!req.cookies['token'] || req.cookies['token'] == "") {
         return res.send("You are not autorizated!");
+    }
+    else if(!req.cookies['group'] || req.cookies['group'] != "admin") {
+        return res.send("You are not in admin group!");
     }
  
     //find all users
