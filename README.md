@@ -106,3 +106,4 @@ module.exports = router;
 ## To do
 - [ ] Create page to update users
 - [ ] Connect webiste with API
+- [ ] Create page to logout user (create column in db to check login)
