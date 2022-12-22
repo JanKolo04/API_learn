@@ -10,6 +10,7 @@ const app = express();
 const register = require('./routes/register');
 const login = require('./routes/login');
 const users = require("./routes/users");
+const update_user = require("./routes/update_user");
 
 if(!config.get("PrivateKey")) {
     console.error("PrivateKey is not defined");
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use('/api/register', register);
 app.use('/api/login', login);
 app.use('/api/users', users);
+app.use("/api/update_user", update_user);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
