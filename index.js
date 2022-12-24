@@ -17,7 +17,7 @@ if(!config.get("PrivateKey")) {
     process.exit(1);
 }
 
-mongoose.connect('mongodb://localhost/testy')
+mongoose.connect('mongodb://localhost/api')
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
 
