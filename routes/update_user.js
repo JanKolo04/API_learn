@@ -5,7 +5,6 @@ const _ = require('lodash');
 const { User, validate } = require("../models/register");
 const express = require('express');
 const { send } = require('process');
-const session = require("../session/index");
 const router = express.Router();
 
 router.post('/:id', async (req, res) => {
@@ -14,10 +13,10 @@ router.post('/:id', async (req, res) => {
     if (error) {
         return res.status(400).send(error.details[0].message);
     }
-    else if(!session.token) {
+    else if(!req.session.token) {
         return res.send("You are not authorizated!");
     }
-    else if(!session.group || session.group != "admin") {
+    else if(!req.session.group || req.session.group != "admin") {
         return res.send("You are not in admin group!");
     }
 

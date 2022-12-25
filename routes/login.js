@@ -5,10 +5,7 @@ const _ = require('lodash');
 const { validate } = require('../models/login');
 const { User } = require("../models/register");
 const express = require('express');
-const { send } = require('process');
-const session = require("../session/index");
 const router = express.Router();
-const app = express();
 
 router.post('/', async (req, res) => {
     // First Validate The Request
@@ -27,10 +24,11 @@ router.post('/', async (req, res) => {
             const token = jwt.sign({_id: user._id}, config.get("PrivateKey"));
 
             //save data in session
-            session.token = token;
-            session.group = user.group;
+            req.session.token = token;
+            req.session.group = user.group;
+            req.session.save();
 
-            res.send("You are in, and your token is: "+ session.token);
+            return res.send("You are in, and your token is: "+ req.session.token);
 
             //return res.send("You are in!");
         }

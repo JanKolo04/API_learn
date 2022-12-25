@@ -1,20 +1,14 @@
-const jwt = require("jsonwebtoken");
-const config = require("config");
-const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User } = require("../models/register");
 const express = require('express');
-const session = require("../session/index");
-const { send, nextTick } = require('process');
-const { appendFile } = require("fs");
 const router = express.Router();
 
 router.post('/', async (req, res) => {
     //check exixsting of token session
-    if(!session.token) {
+    if(!req.session.token) {
         return res.send("You are not autorizated!");
     }
-    else if(!session.group || session.group != "admin") {
+    else if(!req.session.group || req.session.group != "admin") {
         return res.send("You are not in admin group!");
     }
  
