@@ -1,16 +1,12 @@
-const jwt = require("jsonwebtoken");
-const config = require('config');
-const bcrypt = require('bcrypt');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const express = require('express');
-const bodyParser = require('body-parser'); 
-const { User, validate } = require('../test/models/user');
-const crypto = require('crypto');
-const ejs = require('ejs');
-const path = require('path'); 
 const app = express();
-const router = express.Router();
+const path = require('path'); 
+
+//routes
+const login = require('./routes/login');
+const home = require('./routes/home');
 
 mongoose.connect('mongodb://localhost/api')
     .then(() => console.log('Now connected to MongoDB!'))
@@ -20,9 +16,7 @@ mongoose.connect('mongodb://localhost/api')
 app.set('view engine', 'ejs');
 
 //json parser
-const jsonParser = bodyParser.json();
-//parser from form
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+//const jsonParser = bodyParser.json();
 
 //set session options
 app.use(session({
@@ -32,47 +26,15 @@ app.use(session({
     cookie: {secure: true}
 }));
 
+
 app.get('/', (req, res) => {
-    return res.render(path.join(__dirname, 'login.ejs'));
+    return res.render(path.join(__dirname, './page/login.ejs'));
 });
 
 
-app.post('/login', urlencodedParser, (req, res) => {
-    // First Validate The Request
-    const { error } = validate(req.body);
-    if (error) {
-        return res.status(400).send(error.details[0].message);
-    }
+app.use('/login', login);
+app.use('/home', home);
 
-    (async() => {
-        const user = await User.findOne({ email: req.body.email });
-        if(user) {
-            //check passwowrd
-            bcrypt.compare(req.body.password, user.password, function(err, result) {
-                if(result == true) {
-                    //generate token
-                    const token = crypto.randomBytes(28).toString('hex');
-    
-                    req.session.token = token;
-                    req.session.name = user.name;
-                    req.session.save();
-    
-                    return res.redirect(301, '/home');
-                }
-                else {
-                    return res.send('Whats is wrong');
-                }
-            });
-        }
-        else {
-            return res.send("User deosnt exist");
-        }
-    })();
-});
-
-app.get('/home', (req, res) => {
-    return res.render(path.join(__dirname, 'home.ejs'));
-});
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
