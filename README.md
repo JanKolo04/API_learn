@@ -104,7 +104,8 @@ module.exports = router;
 ```
 
 ## To do
-- [ ] Connect webiste with API
+- [x] Connect webiste with API
 - [ ] Create page to logout user (create column in db to check login)
 - [ ] Find place where active session are storing
-- [ ] Check why data from `form` is uundefined 
+- [x] Check why data from `form` is uundefined 
+- [ ] Create frontend for to login and home pages
