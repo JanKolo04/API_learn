@@ -5,10 +5,19 @@ const bodyParser = require('body-parser');
 const { User, validate } = require('../models/user');
 const crypto = require('crypto');
 const path = require('path'); 
-const { nextTick } = require('process');
 const router = express.Router();
-const app = express();
 
+router.get('/', (req, res) => {
+    if(!res.locals.token) {
+        console.log(res.locals.token);
+        return res.send('You are not authorizated');
+    }
+    else {
+        return res.send("HI "+res.locals.user.name);
+    }
+
+    return res.render(path.join(__dirname, '../page/home.ejs'));
+});
 
 
 module.exports = router;
