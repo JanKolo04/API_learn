@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const bodyParser = require('body-parser'); 
 const { User, validate } = require('./models/user');
@@ -8,6 +9,7 @@ const path = require('path');
 const { nextTick } = require('process');
 const router = express.Router();
 const mongoose = require('mongoose');
+const store = new session.MemoryStore();
 const app = express();
 
 //routes
@@ -21,18 +23,14 @@ mongoose.connect('mongodb://localhost/api')
 
 
 //set session options
+app.use(cookieParser());
 app.use(session({
     secret: "user-data",
-    saveUninitialized: false,
-    resave: false,
-    cookie: {secure: true, sameSite: true}
+    saveUninitialized: true,
+    resave: true
 }));
 
 app.set('view engine', 'ejs');
-
-
-//json parser
-//const jsonParser = bodyParser.json();
 
 
 app.get('/', (req, res) => {
@@ -42,7 +40,6 @@ app.get('/', (req, res) => {
 
 //parser from form
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-
 
 app.post('/login', urlencodedParser, (req, res, next) => {
     // First Validate The Request
@@ -59,9 +56,8 @@ app.post('/login', urlencodedParser, (req, res, next) => {
                 if(result == true) {
                     //generate token
                     const token = crypto.randomBytes(28).toString('hex');
-    
-                    req.session.userID = user.name;
-                    console.log(req.session.userID);
+
+                    req.session.name = "admin";
 
                     return res.redirect('/home');
                 }
@@ -76,16 +72,9 @@ app.post('/login', urlencodedParser, (req, res, next) => {
     })();
 });
 
-app.use((req, res, next) => {
-    const { userID } = req.session;
-    if(userID) {
-        res.locals.user = User.find(user => user._id == userID);
-        next();
-    }
-    next();
-});
-
 app.get('/home', (req, res) => {
+    //work session var on other site
+    return res.send(req.session.name);
     if(!req.session.userId) {
         return res.send('You are not authorizated');
     }
