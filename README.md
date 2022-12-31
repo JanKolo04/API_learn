@@ -67,37 +67,40 @@ After whole security we are createing auth_token to check user for is login, and
 In `session` we are also saveing group of user to until later validation on others pages.
 
 ```node
-router.post('/', async (req, res) => {
+//parser from form
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+
+router.post('/', urlencodedParser, (req, res) => {
     // First Validate The Request
     const { error } = validate(req.body);
     if (error) {
         return res.status(400).send(error.details[0].message);
     }
 
-    // Check if this user already exisits
-    const user = await User.findOne({ email: req.body.email });
-    if (user) {
-        //check password correct
-        const validPassword = await bcrypt.compare(req.body.password, user.password);
-        if(validPassword) {
-            //create token
-            const token = jwt.sign({_id: user._id}, config.get("PrivateKey"));
-
-            //save data in session
-            session.token = token;
-            session.group = user.group;
-
-            res.send("You are in, and your token is: "+ session.token);
-
-            //return res.send("You are in!");
+    (async() => {
+        const user = await User.findOne({ email: req.body.email });
+        if(user) {
+            //check passwowrd
+            bcrypt.compare(req.body.password, user.password, function(err, result) {
+                if(result == true) {
+                    //generate token
+                    const token = crypto.randomBytes(28).toString('hex');
+    
+                    req.session.token = token;
+                    req.session.name = user.name;
+    
+                    return res.redirect(301, '/home');
+                }
+                else {
+                    return res.send('Whats is wrong');
+                }
+            });
         }
         else {
-            return res.send("Wrong password!");
+            return res.send("User deosnt exist");
         }
-    } 
-    else {
-        return res.status(400).send('This email doesnt exist!');
-    }
+    })();
 });
 
 module.exports = router;
@@ -106,6 +109,5 @@ module.exports = router;
 ## To do
 - [x] Connect webiste with API
 - [ ] Create page to logout user (create column in db to check login)
-- [ ] Find place where active session are storing
 - [x] Check why data from `form` is uundefined 
 - [ ] Create frontend for to login and home pages
