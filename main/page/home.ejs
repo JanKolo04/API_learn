@@ -7,6 +7,10 @@
 <body>
 
     <h1>Hi you are in !</h1>
-
+    <!--Print data from user object-->
+    <% for(let property in user) {%> 
+        <strong><%= property %></strong>:
+        <%= user[property]; %></br>
+    <%}%>
 </body>
 </html>
