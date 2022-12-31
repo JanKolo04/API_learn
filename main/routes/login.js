@@ -30,7 +30,6 @@ router.post('/', urlencodedParser, (req, res) => {
     
                     req.session.token = token;
                     req.session.name = user.name;
-                    req.session.save();
     
                     return res.redirect(301, '/home');
                 }

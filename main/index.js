@@ -2,6 +2,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
 const path = require('path'); 
 
 //routes
@@ -18,12 +19,12 @@ app.set('view engine', 'ejs');
 //json parser
 //const jsonParser = bodyParser.json();
 
+app.use(cookieParser());
 //set session options
 app.use(session({
     secret: "user-data",
     saveUninitialized: true,
-    resave: false,
-    cookie: {secure: true}
+    resave: true
 }));
 
 

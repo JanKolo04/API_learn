@@ -8,6 +8,7 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
+    return res.send("Name: "+req.session.name);
     return res.render(path.join(__dirname, '../page/home.ejs'));
 });
 
