@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 const express = require('express');
 const bodyParser = require('body-parser'); 
-const { User, validate } = require('../models/user');
+const { User, validateLogin } = require('../models/user');
 const crypto = require('crypto');
 const path = require('path'); 
 const router = express.Router();
@@ -14,7 +14,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 router.post('/', urlencodedParser, (req, res) => {
     // First Validate The Request
-    const { error } = validate(req.body);
+    const { error } = validateLogin(req.body);
     if (error) {
         return res.status(400).send(error.details[0].message);
     }

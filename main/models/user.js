@@ -35,5 +35,16 @@ function validLogin(user) {
     return schema;
 }
 
+function validRegister(user) {
+    const schema = {
+        name: Joi.string().min(1).max(255).required(),
+        email: Joi.string().min(1).max(255).required().email(),
+        password: Joi.string().min(1).max(255).required(),
+        repeat_password: Joi.string().min(1).max(255).required()
+    };
+    return schema;
+}
+
 exports.User = User;
-exports.validate = validLogin;
+exports.validateLogin = validLogin;
+exports.validateRegister = validRegister;
