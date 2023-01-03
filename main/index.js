@@ -9,6 +9,7 @@ const path = require('path');
 const login = require('./routes/login');
 const home = require('./routes/home');
 const register = require('./routes/register');
+const articles = require('./routes/articles');
 
 mongoose.connect('mongodb://localhost/api')
     .then(() => console.log('Now connected to MongoDB!'))
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
 app.use('/login', login);
 app.use('/home', home);
 app.use('/register', register);
+app.use('/articles', articles);
 
 
 const port = process.env.PORT || 4000;

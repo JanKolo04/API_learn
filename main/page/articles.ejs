@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Articles page</title>
+</head>
+<body>
+
+    <h1>Articles page !</h1>
+    <!--Print data from user object-->
+    <% for(let i=0; i<len_obj; i++) {%> 
+        <strong><%= article[i]['title']; %></strong></br>
+        <p><%= article[i]['description']; %></p></br>
+    <%}%>
+</body>
+</html>
