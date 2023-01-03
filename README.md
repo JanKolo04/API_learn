@@ -107,7 +107,6 @@ module.exports = router;
 ```
 
 ## To do
-- [x] Connect webiste with API
 - [ ] Create page to logout user (create column in db to check login)
-- [x] Check why data from `form` is uundefined 
 - [ ] Create frontend for to login and home pages
+- [ ] Page with single article article/:id
