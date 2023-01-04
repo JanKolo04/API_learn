@@ -126,6 +126,6 @@ app.get('/sessions', (req, res) => {
 ```
 
 ## To do
-- [ ] Create page to logout user (create column in db to check login)
+- [ ] Find solution to get all Sessions from store
 - [ ] Create frontend for to login and home pages
 - [ ] Page with single article article/:id
