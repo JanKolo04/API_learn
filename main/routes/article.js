@@ -1,6 +1,6 @@
 const session = require('express-session');
 const express = require('express');
-const { Articles } = require('../models/articles');
+const { Articles } = require('../models/article');
 const path = require('path'); 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.get('/', auth, (req, res) => {
         const aritcles = await Articles.find();
         //object length
         const len_object = Object.keys(aritcles).length;
-        return res.render(path.join(__dirname, '../page/articles.ejs'), {article: aritcles, len_obj: len_object});
+        return res.render(path.join(__dirname, '../page/article.ejs'), {article: aritcles, len_obj: len_object});
     })();
 
 });
