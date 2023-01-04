@@ -106,6 +106,25 @@ router.post('/', urlencodedParser, (req, res) => {
 module.exports = router;
 ```
 
+## Fetch all active session on server
+```node
+const session = require('express-session');
+
+// Use the session middleware
+app.use(session({
+  secret: 'abc123',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+app.get('/sessions', (req, res) => {
+  // Get all the sessions that are currently stored
+  const sessions = session.all;
+
+  res.send(sessions);
+});
+```
+
 ## To do
 - [ ] Create page to logout user (create column in db to check login)
 - [ ] Create frontend for to login and home pages
