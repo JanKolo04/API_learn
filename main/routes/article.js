@@ -24,4 +24,26 @@ router.get('/', auth, (req, res) => {
 
 });
 
+//find article by id
+async function find_article_id(id_article) {
+    //search article by _id
+    const article = await Articles.findById({ _id: id_article });
+
+    return article;
+}
+
+router.get('/:id', auth, async (req, res) => {
+    // get id param
+    const { id } = req.params;
+
+    const article = await find_article_id(id);
+    if(!article) {
+        return res.send('This article doesnt exist!');
+    }
+    else {
+        //return page with data
+        return res.render(path.join(__dirname, '../page/single_article.ejs'), {article: article});
+    }
+});
+
 module.exports = router;
