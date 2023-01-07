@@ -45,6 +45,7 @@ app.use('/home', home);
 app.use('/register', register);
 app.use('/article', article);
 app.use('/sessions', get_sessions);
+app.use(express.static(path.join(__dirname, '/page')));
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

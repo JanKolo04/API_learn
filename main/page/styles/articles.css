@@ -1,0 +1,51 @@
+#new-article {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+#new-article > h2 {
+    padding-bottom: 12px;
+    border-bottom: 1px solid grey;
+}
+
+.articles {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+.article {
+    max-width: 25%;
+    min-width: 270px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.article-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    color: #444444;
+    text-decoration: none;
+}
+
+.article-title, .article-description:first-letter {
+    text-transform: capitalize;
+}
+
+.article-title:hover {
+    transition: 0.5s;
+    color: black;
+}
+
+.article-description {
+    line-height: 27px;
+    text-align: left;
+}

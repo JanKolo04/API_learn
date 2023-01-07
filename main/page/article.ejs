@@ -3,15 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Articles page</title>
+    <link href= "../styles/articles.css" rel="stylesheet"/>
 </head>
 <body>
 
     <h1>Articles page !</h1>
     <!--Print data from user object-->
-    <% for(let i=0; i<len_obj; i++) {%> 
-        <strong><%= article[i]['title']; %></strong></br>
-        <p><%= article[i]['description']; %></p></br>
-    <%}%>
+    <div id="new-article">
+        <h2>Newest articles</h2>
+        <dv class="articles">
+            <% for(let i=0; i<len_obj; i++) {%> 
+                <div class="article">
+                    <a href="article/<%= article[i]['_id']; %>" class="article-title">
+                        <%= article[i]['title']; %>
+                    </a>
+                    <p class="article-description">
+                        <%= article[i]['description']; %>
+                    </p>
+                </div>
+            <%}%>
+        </dv>
+    </div>
 
 </body>
 </html>
