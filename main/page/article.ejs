@@ -8,21 +8,49 @@
 <body>
 
     <h1>Articles page !</h1>
-    <!--Print data from user object-->
-    <div id="new-article">
+    <!--Print new articles-->
+    <div class="article-section">
         <h2>Newest articles</h2>
         <dv class="articles">
+            <% let counter = 0; %>
             <% for(let i=0; i<len_obj; i++) {%> 
-                <div class="article">
-                    <a href="article/<%= article[i]['_id']; %>" class="article-title">
-                        <%= article[i]['title']; %>
-                    </a>
-                    <p class="article-description">
-                        <%= article[i]['description']; %>
-                    </p>
-                </div>
+                <% if(article[i]['category'] == 'new') { %>
+                    <div class="article">
+                        <a href="article/<%= article[i]['_id']; %>" class="article-title">
+                            <%= article[i]['title']; %>
+                        </a>
+                        <p class="article-description">
+                            <%= article[i]['description']; %>
+                        </p>
+                        <% counter++; %>
+                    </div>
+                <% } %>
+
+                <% if(counter == 3) { break; }%>
             <%}%>
-        </dv>
+        </div>
+    </div>
+
+    <div class="article-section">
+        <h2>Other articles</h2>
+        <dv class="articles">
+            <% counter = 0; %>
+            <% for(let i=0; i<len_obj; i++) { %>                 
+                <% if(article[i]['category'] != 'new') { %>
+                    <div class="article">
+                        <a href="article/<%= article[i]['_id']; %>" class="article-title">
+                            <%= article[i]['title']; %>
+                        </a>
+                        <p class="article-description">
+                            <%= article[i]['description']; %>
+                        </p>
+                        <% counter++; %>
+                    </div>
+                <% } %>
+
+                <% if(counter == 6) { break; }%>
+            <%}%>
+        </div>
     </div>
 
 </body>

@@ -14,13 +14,11 @@ const auth = function(req, res, next) {
     next();
 };
 
-router.get('/', auth, (req, res) => {
-    (async() => {
-        const aritcles = await Articles.find();
-        //object length
-        const len_object = Object.keys(aritcles).length;
-        return res.render(path.join(__dirname, '../page/article.ejs'), {article: aritcles, len_obj: len_object});
-    })();
+router.get('/', auth, async (req, res) => {
+    const articles = await Articles.find();
+    //object length
+    const len_object = Object.keys(articles).length;
+    return res.render(path.join(__dirname, '../page/article.ejs'), {article: articles, len_obj: len_object});
 
 });
 
@@ -36,14 +34,16 @@ router.get('/:id', auth, async (req, res) => {
     // get id param
     const { id } = req.params;
 
-    const article = await find_article_id(id);
-    if(!article) {
-        return res.send('This article doesnt exist!');
-    }
-    else {
+    //if coudn't find article by id back into article page
+    try {
+        const article = await find_article_id(id);
         //return page with data
         return res.render(path.join(__dirname, '../page/single_article.ejs'), {article: article});
     }
+    catch(error) {
+        return res.redirect(302, '/article');
+    }
+
 });
 
 module.exports = router;
