@@ -19,6 +19,10 @@ const Articles = mongoose.model('articles', new mongoose.Schema({
         required: true,
         minlength: 1,
         maxlength: 50
+    },
+    date: {
+        type: Date,
+        default: new Date
     }
 }));
 

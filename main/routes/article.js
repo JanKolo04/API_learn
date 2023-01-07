@@ -2,6 +2,7 @@ const session = require('express-session');
 const express = require('express');
 const { Articles } = require('../models/article');
 const path = require('path'); 
+const { delay } = require('lodash');
 const router = express.Router();
 
 //middleware to check user auth
@@ -15,7 +16,8 @@ const auth = function(req, res, next) {
 };
 
 router.get('/', auth, async (req, res) => {
-    const articles = await Articles.find();
+    const articles = await Articles.find(null, null, { sort: { _id: -1 } });
+
     //object length
     const len_object = Object.keys(articles).length;
     return res.render(path.join(__dirname, '../page/article.ejs'), {article: articles, len_obj: len_object});

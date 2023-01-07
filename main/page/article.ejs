@@ -14,19 +14,18 @@
         <dv class="articles">
             <% let counter = 0; %>
             <% for(let i=0; i<len_obj; i++) {%> 
-                <% if(article[i]['category'] == 'new') { %>
-                    <div class="article">
-                        <a href="article/<%= article[i]['_id']; %>" class="article-title">
-                            <%= article[i]['title']; %>
-                        </a>
-                        <p class="article-description">
-                            <%= article[i]['description']; %>
-                        </p>
-                        <% counter++; %>
-                    </div>
-                <% } %>
+                <div class="article">
+                    <a href="article/<%= article[i]['_id']; %>" class="article-title">
+                        <%= article[i]['title']; %>
+                    </a>
+                    <p class="article-description">
+                        <% let desc = article[i]['description']; %>
+                        <%= desc.substr(0, 420)+'...'; %>
+                    </p>
+                    <% counter++; %>
+                </div>
 
-                <% if(counter == 3) { break; }%>
+                <% if(counter == 3) { break; } %>
             <%}%>
         </div>
     </div>
@@ -35,18 +34,17 @@
         <h2>Other articles</h2>
         <dv class="articles">
             <% counter = 0; %>
-            <% for(let i=0; i<len_obj; i++) { %>                 
-                <% if(article[i]['category'] != 'new') { %>
-                    <div class="article">
-                        <a href="article/<%= article[i]['_id']; %>" class="article-title">
-                            <%= article[i]['title']; %>
-                        </a>
-                        <p class="article-description">
-                            <%= article[i]['description']; %>
-                        </p>
-                        <% counter++; %>
-                    </div>
-                <% } %>
+            <% for(let i=3; i<len_obj; i++) { %>                 
+                <div class="article">
+                    <a href="article/<%= article[i]['_id']; %>" class="article-title">
+                        <%= article[i]['title']; %>
+                    </a>
+                    <p class="article-description">
+                        <% let desc = article[i]['description']; %>
+                        <%= desc.substr(0, 420)+'...'; %>
+                    </p>
+                    <% counter++; %>
+                </div>
 
                 <% if(counter == 6) { break; }%>
             <%}%>
